@@ -10,6 +10,11 @@
   padding: 0;
   box-sizing: border-box;
   font-family: "Poppins", sans-serif;
+  transition: all 0.3s linear;
+  -webkit-transition: all 0.3s linear;
+  -moz-transition: all 0.3s linear;
+  -ms-transition: all 0.3s linear;
+  -o-transition: all 0.3s linear;
 }
 body {
   background-color: var(--blue);
@@ -26,6 +31,11 @@ body {
   -moz-transform: translate(-50%, -50%);
   -ms-transform: translate(-50%, -50%);
   -o-transform: translate(-50%, -50%);
+}
+.quiz-box.active,
+.info-box.active {
+  opacity: 100%;
+  pointer-events: initial;
 }
 /* start button  */
 .start-btn button {
@@ -55,7 +65,8 @@ body {
 }
 /* info box  */
 .info-box {
-  display: none;
+  opacity: 0;
+  pointer-events: none;
   width: 550px;
   background-color: var(--white);
   border-radius: 5px;
@@ -129,7 +140,8 @@ button.restart:hover {
 }
 /* start quiz box  */
 .quiz-box {
-  display: none;
+  opacity: 0;
+  pointer-events: none;
   width: 550px;
   background-color: var(--white);
   border-radius: 5px;
