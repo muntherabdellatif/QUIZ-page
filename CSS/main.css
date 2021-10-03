@@ -313,3 +313,24 @@ button.restart:hover {
   padding-top: 20px;
   border-top: var(--border);
 }
+/* media  */
+@media (max-width: 991px) {
+  .result-box,
+  .quiz-box,
+  .info-box {
+    width: 330px;
+    margin: auto;
+  }
+  .quiz-box header .title {
+    font-size: 16px;
+  }
+  .quiz-box header {
+    padding: 0 15px;
+  }
+  .quiz-box section {
+    padding: 25px 15px 20px;
+  }
+  .quiz-box footer {
+    padding: 15px;
+  }
+}
