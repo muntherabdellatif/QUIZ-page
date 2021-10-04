@@ -58,6 +58,7 @@ body {
   -moz-transition: 0.5s;
   -ms-transition: 0.5s;
   -o-transition: 0.5s;
+  box-shadow: -14px 16px 20px 0px #212175;
 }
 .start-btn button:hover {
   background-color: var(--hover-blue);
@@ -348,5 +349,9 @@ button.restart:hover {
   }
   .quiz-box footer {
     padding: 15px;
+  }
+  .quiz-box header .timer {
+    font-size: 16px;
+    width: 187px;
   }
 }

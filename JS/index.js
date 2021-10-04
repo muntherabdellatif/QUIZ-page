@@ -19,7 +19,7 @@ let tickIcon ='<div class="icon tick"><i class="fas fa-check"></i></div>';
 let queDownCounter =document.querySelector (".timer-sec");
 // start and Quit Quiz :
 let userMark = 0 ;
-let counter=0;
+let counter=15;
 startBtn.onclick = () => {
     userMark = 0 ;
     infoBox.classList.add("active");
@@ -33,14 +33,14 @@ infoBoxContinueBtn.onclick =() => {
     infoBox.classList.remove("active");
     quizBox.classList.add("active");
     showQuistions(queCounter);
-    counter=15;
+    counter=16;
 }
 // next button :
 nextBtn.onclick = () => {
     if (queCounter<questions.length-1){
     queCounter++;
     showQuistions(queCounter);
-    counter=15;
+    counter=16;
     }else if (queCounter==questions.length-1){
        showResult(); 
     }
@@ -50,16 +50,48 @@ restartBtn.onclick = () => {
     userMark = 0 ;
     infoBox.classList.add("active");
     resultBox.classList.remove('active');
+    queCounter=0;
 }
 // quit button :
 quitBtn.onclick = () => {
     userMark = 0 ;
     resultBox.classList.remove('active');
+    queCounter=0;
+}
+var downCounter;
+startCounter( );
+function startCounter( ) {
+    downCounter =setInterval(() => {
+        counter-- ;
+        if (counter>-1){
+            queDownCounter.innerHTML = counter ;
+        }if (counter==0) {
+            nextBtn.classList.add("active");
+            let correctAns = questions[queCounter].answer;
+            let opt = options.querySelectorAll(".option");
+            for (let i=0 ; i<opt.length ; i++) {
+                opt[i].classList.add("disabled");
+                if (opt[i].textContent == correctAns ){
+                    if ( !opt[i].classList.contains("correct")){
+                        opt[i].classList.add("correct");
+                        opt[i].insertAdjacentHTML("beforeend",tickIcon);
+                    }
+                }
+            }
+        }
+    }, 1000);
 }
 function showResult () {
     resultBox.classList.add('active');
     quizBox.classList.remove('active');
-    let scoreTextTag = "<span>and sorry you got only <p>"+userMark +"</p> out of <p>"+questions.length +"</p></span>"
+    let scoreTextTag="";
+    if ( userMark<5 ){
+        scoreTextTag = "<span> Sorry you got only <p>"+userMark +"</p> out of <p>"+questions.length +"</p></span>"
+    }else if (userMark<7){
+        scoreTextTag = "<span> Good! , you got <p>"+userMark +"</p> out of <p>"+questions.length +"</p></span>"
+    }else {
+        scoreTextTag = "<span> Very Good! , you got <p>"+userMark +"</p> out of <p>"+questions.length +"</p></span>"
+    }
     score.innerHTML=scoreTextTag;
 }
 function showQuistions(index) {
@@ -78,24 +110,9 @@ function showQuistions(index) {
     for (let i=0 ;i<opt.length; i++) {
         opt[i].setAttribute("onclick","optionSellected(this)");
     }
-    let downCounter =setInterval(() => {
-        counter-- ;
-        if (counter===0) {
-            clearInterval(downCounter);
-            nextBtn.classList.add("active");
-            let correctAns = questions[queCounter].answer;
-            for (let i=0 ; i<opt.length ; i++) {
-                opt[i].classList.add("disabled");
-                if (opt[i].textContent == correctAns ){
-                    opt[i].classList.add("correct");
-                    opt[i].insertAdjacentHTML("beforeend",tickIcon);
-                }
-            }
-        }
-        queDownCounter.innerHTML = counter ;
-    }, 1000);
 }
 function optionSellected (answer) {
+    counter=0;
     let uerAns = answer.textContent;
     let correctAns = questions[queCounter].answer;
     if (uerAns===correctAns){
@@ -117,3 +134,10 @@ function optionSellected (answer) {
     }
     nextBtn.classList.add("active");
 }
+// no one can reload the page ! 
+window.addEventListener('beforeunload', function (e) {
+    // Cancel the event
+    e.preventDefault(); // If you prevent default behavior in Mozilla Firefox prompt will always be shown
+    // Chrome requires returnValue to be set
+    e.returnValue = '';
+  });
